@@ -4,14 +4,13 @@ const filterShortcuts = require('../lib/filter-shortcuts')
 module.exports = store
 
 function store (state, emitter) {
-  state.company = 'Administrasjonen'
   state.roles = []
   state.shortcuts = []
   state.content = []
 
   emitter.on('DOMContentLoaded', function () {
     emitter.on('roles:update', function () {
-      const roles = filterRoles({company: state.company})
+      const roles = filterRoles({company: state.user.companyName})
       state.roles = roles
       emitter.emit('shortcuts:update')
       emitter.emit('content:update')
@@ -35,6 +34,5 @@ function store (state, emitter) {
     emitter.on('error', function (error) {
       console.error(error)
     })
-    emitter.emit('roles:update')
   })
 }

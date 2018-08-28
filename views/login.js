@@ -7,11 +7,10 @@ module.exports = view
 function view (state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
   const query = queryString.parse(state.params.wildcard)
-  console.log(query)
-  emit('auth:signin', query)
+  state.query = query
   return html`
   <body>
-  Login...
+  Login...<button onclick=${() => emit('auth:signin')}>Fortsett</button>
   </body>
   `
 }

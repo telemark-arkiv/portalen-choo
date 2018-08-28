@@ -6,9 +6,10 @@ function store (state, emitter) {
   state.clientUUID = uuid()
   state.accessToken = false
   state.idToken = false
+  state.user = false
   emitter.on('DOMContentLoaded', function () {
-    emitter.on('auth:signin', function (data) {
-      console.log(data)
+    emitter.on('auth:signin', function () {
+      const data = state.query
       state.accessToken = data.access_token
       state.idToken = data.id_token
       emitter.emit('auth:getuser')
@@ -19,10 +20,12 @@ function store (state, emitter) {
           Authorization: `Bearer ${state.accessToken}`
         }
       }
-      window.fetch(`https://graph.microsoft.com/v1.0/me`, options)
+      window.fetch(`https://graph.microsoft.com/v1.0/me?$select=displayName,mail,companyName,department`, options)
         .then(response => response.json())
         .then(user => {
-          console.log(user)
+          state.user = user
+          emitter.emit('roles:update')
+          emitter.emit('replaceState', '/')
         })
     })
   })

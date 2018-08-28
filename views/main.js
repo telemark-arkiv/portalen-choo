@@ -14,6 +14,7 @@ function view (state, emit) {
     <body>
       <main class="pa3 cf">
       <div>
+        ${state.user ? state.user.displayName : ''}
         <a href="https://login.microsoftonline.com/${config.MOA_TENANT_ID}/oauth2/v2.0/authorize?client_id=${config.MOA_CLIENT_ID}&response_type=id_token+token&redirect_uri=https://localhost:8080/api/login&scope=openid&response_mode=fragment&state=12345&nonce=${state.clientUUID}">Logg inn</a>
       </div>
       <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
