@@ -1,7 +1,8 @@
 const html = require('choo/html')
 const shortcut = require('../components/shortcut')
 const newsItem = require('../components/news-item')
-const config = require('../config')
+const loginButton = require('../components/log-in-button')
+const menuTop = require('../components/menu-top')
 
 var TITLE = 'portalen-choo - main'
 
@@ -12,10 +13,11 @@ function view (state, emit) {
 
   return html`
     <body>
+      ${menuTop(state)}
       <main class="pa3 cf">
+      ${loginButton(state.loggedIn)}
       <div>
         ${state.user ? state.user.displayName : ''}
-        <a href="https://login.microsoftonline.com/${config.MOA_TENANT_ID}/oauth2/v2.0/authorize?client_id=${config.MOA_CLIENT_ID}&response_type=id_token+token&redirect_uri=https://localhost:8080/api/login&scope=openid&response_mode=fragment&state=12345&nonce=${state.clientUUID}">Logg inn</a>
       </div>
       <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
         ${state.shortcuts.map(shortcut)}

@@ -1,4 +1,5 @@
 const uuid = require('uuid-random')
+const queryString = require('query-string')
 
 module.exports = store
 
@@ -7,11 +8,20 @@ function store (state, emitter) {
   state.accessToken = false
   state.idToken = false
   state.user = false
+  state.loggedIn = false
   emitter.on('DOMContentLoaded', function () {
-    emitter.on('auth:signin', function () {
-      const data = state.query
+    emitter.on('auth:checklogin', function () {
+      if (state.params.wildcard) {
+        const data = queryString.parse(state.params.wildcard)
+        emitter.emit('auth:signin', data)
+      } else {
+        console.log('No login here')
+      }
+    })
+    emitter.on('auth:signin', function (data) {
       state.accessToken = data.access_token
       state.idToken = data.id_token
+      state.loggedIn = true
       emitter.emit('auth:getuser')
     })
     emitter.on('auth:getuser', function () {
@@ -28,5 +38,6 @@ function store (state, emitter) {
           emitter.emit('replaceState', '/')
         })
     })
+    emitter.emit('auth:checklogin')
   })
 }
