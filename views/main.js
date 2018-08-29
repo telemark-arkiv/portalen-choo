@@ -13,12 +13,9 @@ function view (state, emit) {
 
   return html`
     <body>
-      ${menuTop(state)}
+      ${menuTop(state, emit)}
       <main class="pa3 cf">
       ${loginButton(state.loggedIn)}
-      <div>
-        ${state.user ? state.user.displayName : ''}
-      </div>
       <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
         ${state.shortcuts.map(shortcut)}
       </div>

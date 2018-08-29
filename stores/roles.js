@@ -10,13 +10,13 @@ function store (state, emitter) {
 
   emitter.on('DOMContentLoaded', function () {
     emitter.on('roles:update', function () {
-      const roles = filterRoles({company: state.user.companyName})
+      const roles = filterRoles({ company: state.user.companyName })
       state.roles = roles
       emitter.emit('shortcuts:update')
       emitter.emit('content:update')
     })
     emitter.on('shortcuts:update', function () {
-      const shortcuts = filterShortcuts({roles: state.roles})
+      const shortcuts = filterShortcuts({ roles: state.roles })
       state.shortcuts = shortcuts
       emitter.emit('render')
     })
@@ -30,6 +30,11 @@ function store (state, emitter) {
         .catch((error) => {
           emitter.emit('error', error)
         })
+    })
+    emitter.on('roles:cleanup', function () {
+      state.roles = []
+      state.shortcuts = []
+      state.content = []
     })
     emitter.on('error', function (error) {
       console.error(error)

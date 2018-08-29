@@ -1,10 +1,8 @@
-const uuid = require('uuid-random')
 const queryString = require('query-string')
 
 module.exports = store
 
 function store (state, emitter) {
-  state.clientUUID = uuid()
   state.accessToken = false
   state.idToken = false
   state.user = false
@@ -37,6 +35,18 @@ function store (state, emitter) {
           emitter.emit('roles:update')
           emitter.emit('replaceState', '/')
         })
+        .catch(error => {
+          emitter.emit('error', error)
+        })
+    })
+    emitter.on('auth:signout', function () {
+      state.accessToken = false
+      state.idToken = false
+      state.user = false
+      state.loggedIn = false
+      emitter.emit('roles:cleanup')
+      emitter.emit('search:cleanup')
+      emitter.emit('replaceState', '/')
     })
     emitter.emit('auth:checklogin')
   })

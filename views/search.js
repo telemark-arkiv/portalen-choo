@@ -1,7 +1,8 @@
 const html = require('choo/html')
+const menuTop = require('../components/menu-top')
 const searchItem = require('../components/search-item')
 
-var TITLE = 'portalen-choo - search'
+var TITLE = 'portalen - søkeresultat'
 
 module.exports = view
 
@@ -10,29 +11,13 @@ function view (state, emit) {
 
   return html`
     <body>
+      ${menuTop(state, emit)}
       <main class="pa3 cf">
         <h1>Søkeresultat</h1>
-        <form id="login" onsubmit=${onsubmit}>
-        <label for="query" class="white">
-          Søk
-        </label>
-        <input id="query" name="query"
-          type="text"
-          required
-          title="Søk i portalen"
-        >
-        <input type="submit" value="Søk">
-      </form>
       <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
         ${state.searchResults.map(searchItem)}
       </div>
       </main>
     </body>
   `
-
-  function onsubmit (e) {
-    e.preventDefault()
-    const form = e.currentTarget
-    emit('search:search', form.query.value)
-  }
 }

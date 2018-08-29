@@ -14,5 +14,8 @@ function store (state, emitter) {
           emitter.emit('error', error)
         })
     })
+    emitter.on('search:cleanup', function () {
+      state.searchResults = []
+    })
   })
 }
