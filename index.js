@@ -1,9 +1,13 @@
 var css = require('sheetify')
 var choo = require('choo')
+const persist = require('choo-persist')
 
 css('tachyons')
 
 var app = choo()
+
+app.use(persist({ name: 'portalen-persist' }))
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())
 } else {

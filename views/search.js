@@ -14,9 +14,7 @@ function view (state, emit) {
       ${menuTop(state, emit)}
       <main class="pa3 cf">
         <h1>Søkeresultat</h1>
-      <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
         ${state.searchResults.map(searchItem)}
-      </div>
       </main>
     </body>
   `
