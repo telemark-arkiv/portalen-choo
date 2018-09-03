@@ -2,6 +2,6 @@ const html = require('choo/html')
 
 module.exports = (state, emit) => {
   return state.loggedIn ? html`
-  <a class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box mr2" href="#" onclick=${() => emit('auth:signout')}>Logg av</a>
+  <a class="link dim white dib mr3" href="#" onclick=${() => emit('auth:signout')}>Logg av</a>
   ` : ''
 }

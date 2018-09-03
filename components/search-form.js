@@ -1,7 +1,7 @@
 const html = require('choo/html')
 
 module.exports = (state, emit) => {
-  return html`
+  return state.loggedIn ? html`
   <form id="searchForm" onsubmit=${onsubmit}>
     <fieldset class="cf bn ma0 pa3">
     <div class="cf">
@@ -11,7 +11,8 @@ module.exports = (state, emit) => {
     </div>
     </fieldset>
   </form>
-  `
+  ` : ''
+
   function onsubmit (e) {
     e.preventDefault()
     const form = e.currentTarget
