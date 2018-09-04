@@ -1,11 +1,13 @@
 const filterRoles = require('../lib/filter-roles')
 const filterShortcuts = require('../lib/filter-shortcuts')
+const filterLinks = require('../lib/filter-links')
 
 module.exports = store
 
 function store (state, emitter) {
   state.roles = []
   state.shortcuts = []
+  state.links = []
   state.content = []
   state.myIp = false
 
@@ -14,11 +16,17 @@ function store (state, emitter) {
       const roles = filterRoles({ company: state.user.companyName })
       state.roles = roles
       emitter.emit('shortcuts:update')
+      emitter.emit('links:update')
       emitter.emit('content:update')
     })
     emitter.on('shortcuts:update', function () {
       const shortcuts = filterShortcuts({ roles: state.roles, myIp: state.myIp })
       state.shortcuts = shortcuts
+      emitter.emit('render')
+    })
+    emitter.on('links:update', function () {
+      const links = filterLinks({ roles: state.roles })
+      state.links = links
       emitter.emit('render')
     })
     emitter.on('content:update', function () {
