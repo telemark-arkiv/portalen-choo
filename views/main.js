@@ -22,8 +22,8 @@ function view (state, emit) {
       <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
         ${state.shortcuts.map(shortcut)}
       </div>
-      <div>
-      ${state.links.map(link)}
+      <div class="flex-m flex-l flex-wrap-l flex-wrap-m justify-start">
+        ${state.links.map(link)}
       </div>
       <div>
         ${state.content.map(newsItem)}

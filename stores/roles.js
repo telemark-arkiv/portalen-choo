@@ -53,6 +53,7 @@ function store (state, emitter) {
     emitter.on('roles:cleanup', function () {
       state.roles = []
       state.shortcuts = []
+      state.links = []
       state.content = []
       state.myIp = false
     })
