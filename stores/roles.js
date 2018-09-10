@@ -25,7 +25,7 @@ function store (state, emitter) {
       emitter.emit('render')
     })
     emitter.on('links:update', function () {
-      const links = filterLinks({ roles: state.roles })
+      const links = filterLinks({ roles: state.roles, myIp: state.myIp })
       state.links = links
       emitter.emit('render')
     })
