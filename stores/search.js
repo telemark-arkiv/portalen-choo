@@ -6,7 +6,7 @@ function store (state, emitter) {
   emitter.on('DOMContentLoaded', function () {
     emitter.on('search:search', function (query) {
       state.searchQuery = query
-      window.fetch(`https://cors-anywhere.herokuapp.com/https://search.portalen.t-fk.no/api/search?query=${query}`)
+      window.fetch(`https://search.service.t-fk.no/api/search?q=${query}`)
         .then(response => response.json())
         .then(data => {
           state.searchResults = data.hits.hits

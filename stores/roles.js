@@ -30,6 +30,7 @@ function store (state, emitter) {
       emitter.emit('render')
     })
     emitter.on('content:update', function () {
+      console.log(state.roles)
       window.fetch(`https://content.portalen.win/api/content?roles=${state.roles.join('|')}`)
         .then(response => response.json())
         .then(content => {
